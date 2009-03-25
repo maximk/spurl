@@ -1,0 +1,80 @@
+#
+#
+#
+
+CCOPTS		= /nologo /MDd /W3 /Gm /EHsc /Zi /Od /Fo$B/ \
+			  /I ../teeterl/xvm \
+			  /D WIN32 /D APR_DECLARE_STATIC /D APU_DECLARE_STATIC
+LDOPTS		= /nologo /debug /subsystem:console /incremental:no \
+			  /nodefaultlib:msvcrt
+APRLIBS		= apr/apr-1.lib apr/aprutil-1.lib
+STDLIBS		= kernel32.lib advapi32.lib ws2_32.lib wsock32.lib \
+			  ole32.lib shell32.lib rpcrt4.lib
+
+ERLC		= "C:\Program Files\erl5.6\bin\erlc.exe"
+ERL			= "C:\Program Files\erl5.6\bin\erl.exe"
+
+TEETERL_LIB = ..\teeterl\bin\teeterl.lib
+EXEC		= ..\teeterl\bin\exec.exe
+
+M			= mod
+X			= xbin
+B			= bin
+
+XS			= $X/spurl.cx \
+			  $X/muse.cx \
+			  $X/comet.cx \
+			  $X/json.cx \
+			  $X/ason.cx \
+			  $X/orkut.cx \
+			  $X/base64.cx \
+			  $X/nip.cx \
+			  $X/html.cx \
+			  $X/xml.cx \
+			  $X/hmac.cx \
+			  $X/prf.cx \
+			  $X/rsa.cx \
+			  $X/ber.cx \
+			  $X/tls.cx \
+			  $X/ssl.cx \
+			  $X/test.cx
+
+XO			= $B/main.obj \
+			  $B/spurl.obj \
+			  $B/muse.obj \
+			  $B/comet.obj \
+			  $B/json.obj \
+			  $B/ason.obj \
+			  $B/orkut.obj \
+			  $B/base64.obj \
+			  $B/nip.obj \
+			  $B/html.obj \
+			  $B/xml.obj \
+			  $B/hmac.obj \
+			  $B/prf.obj \
+			  $B/rsa.obj \
+			  $B/ber.obj \
+			  $B/tls.obj \
+			  $B/ssl.obj \
+			  $B/test.obj
+
+main.c:
+	$(EXEC) appgen main spurl muse spurl comet json ason orkut base64 nip html xml hmac prf rsa ber tls ssl test .
+
+$B/spurl.exe: $(XO) $(TEETERL_LIB)
+	link.exe $(LDOPTS) /out:"$@" $(XO) $(TEETERL_LIB) $(APRLIBS) $(STDLIBS)
+
+all:		$(XS) $B/spurl.exe
+
+.SUFFIXES:: .c .erl .x .cx
+
+{$M}.erl{$X}.cx:
+	$(EXEC) x_compile files $< $X
+
+{$X}.cx{$B}.obj::
+	$(CC) /c $(CCOPTS) /TC $<
+	
+.c{$B}.obj::
+	$(CC) /c $(CCOPTS) $<
+
+# EOF

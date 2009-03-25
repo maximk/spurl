@@ -1,0 +1,28 @@
+
+spurl is a demo teeterl application, a web-based front-end to teeterl.
+
+PREREQUISITES
+
+teeterl should be built preferrably side-by-side with spurl. Otherwise,
+a lengthy path editing may ensue.
+
+INSTALLATION
+
+1. Make sure teeterl is downloaded and built.
+
+2. Download spurl from 	git://github.com/maximk/spurl.git.
+
+3. Edit Makefile to point to APR libraries, teeterl libaries, etc.
+
+4. make all
+
+HOW TO RUN
+
+spurl includes an unfinished Erlang Flex-based IDE. To access the IDE,
+start spurl with:
+
+bin/spurl -port 8080 -webroot web
+
+(web is the directory containing the IDE files)
+
+Point your browser to http://localhost:8080/main.html and enjoy.
