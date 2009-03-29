@@ -35,7 +35,7 @@ extern unsigned char spurl_bin_data[];
 extern unsigned int muse_bin_size;
 extern unsigned char muse_bin_data[];
 
-int main(int ac, char *av[])
+int main(int ac, const char *av[])
 {
 	teeterl_init();
 
